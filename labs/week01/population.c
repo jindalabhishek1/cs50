@@ -25,8 +25,9 @@ int main(void)
     {
         current = current + (current / 3) - (current / 4);
         years++;
+        // printf("Current: %i\nYear: %i\n", current, years);
     }
 
     // TODO: Print number of years
-    printf ("Years: %i\n", years);
+    printf("Years: %i\n", years);
 }
