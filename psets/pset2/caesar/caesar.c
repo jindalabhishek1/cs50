@@ -9,27 +9,35 @@ int retrieve_key(string);
 
 int main(int argc, string argv[])
 {
+    bool flag = false;
     // checking if there are more or less than 2 command line arguments
     // ./caesar 4000 are two arguments
     if (argc != 2)
+    {
+        flag = true;
+    }
+    else
+    {
+        // int key = retrieve_key(argv[1]);
+        // validaing the key
+        string str_key = argv[1];
+        int key = 0;
+        for (int i = 0, n = strlen(str_key); i < n; i++)
+        {
+            char c = str_key[i];
+            if (! isdigit(c))
+            {
+                flag = true;
+            }
+        }
+    }
+
+    if (flag == true)
     {
         printf("Usage: ./caeser key\n");
         return 1;
     }
 
-    // int key = retrieve_key(argv[1]);
-    // validaing the key
-    string str_key = argv[1];
-    int key = 0;
-    for (int i = 0, n = strlen(str_key); i < n; i++)
-    {
-        char c = str_key[i];
-        if (! isdigit(c))
-        {
-            printf("Usage: ./caeser key\n");
-            return 1;
-        }
-    }
     // converting digit string to int
     key = atoi(str_key);
 
