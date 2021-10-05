@@ -76,6 +76,7 @@ bool validate_key(int argc, string argv[])
             if (! isdigit(c))
             {
                 flag = false;
+                break;
             }
             else
             {
