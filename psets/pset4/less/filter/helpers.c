@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int avg (int, int);
+
 // Convert image to grayscale
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
 {
@@ -129,112 +131,35 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     image[2][2].rgbtBlue = 255;
     */
 
-    /**
-     * calculating average in row for neighbouring elements
-     * taking all the neighbouring elements
-     * creates a (3 * 3) matrix with the current element at the center.
-     * for edge elements, take (3 * 3) matrix and skip the missing neighbours
-    */
+    avg (1, 2);
+    // for (int i = 0; i < height; i++)
+    // {
+    //     int average = 0;
+    //     for (int j = 0; j < width; j++)
+    //     {
+    //         if (i = 0)
+    //         {
+    //             if (j = 0)
+    //             {
 
-    // average of left right neighbours
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
-            BYTE avgRed = 0, avgGreen = 0, avgBlue = 0;
-
-            // for the left edge
-            if (j == 0)
-            {
-                avgRed = round ((image[i][j].rgbtRed + image[i][j + 1].rgbtRed) / 2.0);
-                avgGreen = round ((image[i][j].rgbtGreen + image[i][j + 1].rgbtGreen) / 2.0);
-                avgBlue = round ((image[i][j].rgbtBlue + image[i][j + 1].rgbtBlue) / 2.0);
-            }
-
-            // for the right edge
-            else if (j == width - 1)
-            {
-                avgRed = round ((image[i][j - 1].rgbtRed + image[i][j].rgbtRed) / 2.0);
-                avgGreen = round ((image[i][j - 1].rgbtGreen + image[i][j].rgbtGreen) / 2.0);
-                avgBlue = round ((image[i][j - 1].rgbtBlue + image[i][j].rgbtBlue) / 2.0);
-            }
-
-            // elements other than the left and right sides
-            else
-            {
-                avgRed = round ((image[i][j - 1].rgbtRed + image[i][j].rgbtRed + image[i][j + 1].rgbtRed) / 3.0);
-                avgGreen = round ((image[i][j - 1].rgbtGreen + image[i][j].rgbtGreen + image[i][j + 1].rgbtGreen) / 3.0);
-                avgBlue = round ((image[i][j - 1].rgbtBlue + image[i][j].rgbtBlue + image[i][j + 1].rgbtBlue) / 3.0);
-            }
-
-            // assigning in the reference matrix
-            reference[i][j].rgbtBlue = avgBlue;
-            reference[i][j].rgbtGreen = avgGreen;
-            reference[i][j].rgbtRed = avgRed;
-        }
-    }
-
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
-            image[i][j] = reference[i][j];
-        }
-    }
-    // free(reference);
-
-    // reference = calloc(height, width * sizeof(RGBTRIPLE));
-
-    // average of neighbouring top and bottom elements
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
-            BYTE avgRed = 0, avgGreen = 0, avgBlue = 0;
-
-            // for top edge
-            if (i == 0)
-            {
-                avgRed = round ((image[i][j].rgbtRed + image[i + 1][j].rgbtRed) / 2.0);
-                avgGreen = round ((image[i][j].rgbtGreen + image[i + 1][j].rgbtGreen) / 2.0);
-                avgBlue = round ((image[i][j].rgbtBlue + image[i + 1][j].rgbtBlue) / 2.0);
-            }
-
-            // for bottom edge
-            else if (i == height - 1)
-            {
-                avgRed = round ((image[i - 1][j].rgbtRed + image[i][j].rgbtRed) / 2.0);
-                avgGreen = round ((image[i - 1][j].rgbtGreen + image[i][j].rgbtGreen) / 2.0);
-                avgBlue = round ((image[i - 1][j].rgbtBlue + image[i][j].rgbtBlue) / 2.0);
-            }
-
-            // elements other than top and bottom edges
-            else
-            {
-                avgRed = round ((image[i - 1][j].rgbtRed + image[i][j].rgbtRed + image[i + 1][j].rgbtRed) / 3.0);
-                avgGreen = round ((image[i - 1][j].rgbtGreen + image[i][j].rgbtGreen + image[i + 1][j].rgbtGreen) / 3.0);
-                avgBlue = round ((image[i - 1][j].rgbtBlue + image[i][j].rgbtBlue + image[i + 1][j].rgbtBlue) / 3.0);
-            }
-
-            reference[i][j].rgbtBlue = avgBlue;
-            reference[i][j].rgbtGreen = avgGreen;
-            reference[i][j].rgbtRed = avgRed;
-        }
-    }
-
-    /**
-     * now each element of the matrix is average of all the immediate neighbouring elements
-     * average include the element it self also
-     */
-
-    for (int i = 0; i < height; i++)
-    {
-        for (int j = 0; j < width; j++)
-        {
-            image[i][j] = reference[i][j];
-        }
-    }
-    free(reference);
-
+    //             }
+    //         }
+    //     }
+    // }
     return;
+}
+
+int avg(int h, int w)
+{
+    RGBTRIPLE average;
+    // printf("%d %d %d\n", average.rgbtRed, average.rgbtGreen, average.rgbtBlue);
+
+    // for (int i = 0; i < h; i++)
+    // {
+    //     for (int j = 0; j < w; j++)
+    //     {
+    //         average.rgbtRed
+    //     }
+    // }
+    return 1;
 }
