@@ -18,7 +18,7 @@ void grayscale(int height, int width, RGBTRIPLE image[height][width])
             // BYTE blue = 27;
             // BYTE green = 28;
             // BYTE red = 28;
-            BYTE avg = round (((float)blue + green + red) / 3);
+            BYTE avg = round(((float)blue + green + red) / 3);
             image[i][j].rgbtBlue = avg;
             image[i][j].rgbtGreen = avg;
             image[i][j].rgbtRed = avg;
@@ -47,13 +47,22 @@ void sepia(int height, int width, RGBTRIPLE image[height][width])
             WORD sepiaGreen;
             WORD sepiaRed;
 
-            sepiaBlue = round (red * 0.272 + green * 0.534 + blue * 0.131);
-            sepiaGreen = round (red * 0.349 + green * 0.686 + blue * 0.168);
-            sepiaRed = round (red * 0.393 + green * 0.769 + blue * 0.189);
+            sepiaBlue = round(red * 0.272 + green * 0.534 + blue * 0.131);
+            sepiaGreen = round(red * 0.349 + green * 0.686 + blue * 0.168);
+            sepiaRed = round(red * 0.393 + green * 0.769 + blue * 0.189);
 
-            if (sepiaBlue > 255)  {  sepiaBlue  = 255;  }
-            if (sepiaGreen > 255) {  sepiaGreen = 255;  }
-            if (sepiaRed > 255)   {  sepiaRed   = 255;  }
+            if (sepiaBlue > 255)
+            {
+                sepiaBlue  = 255;
+            }
+            if (sepiaGreen > 255)
+            {
+                sepiaGreen = 255;
+            }
+            if (sepiaRed > 255)
+            {
+                sepiaRed   = 255;
+            }
 
             image[i][j].rgbtBlue = sepiaBlue;
             image[i][j].rgbtGreen = sepiaGreen;
@@ -294,9 +303,9 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             }
 
             // rounding off
-            rgbtRed = round (rgbtRed / count);
-            rgbtGreen = round (rgbtGreen / count);
-            rgbtBlue = round (rgbtBlue / count);
+            rgbtRed = round(rgbtRed / count);
+            rgbtGreen = round(rgbtGreen / count);
+            rgbtBlue = round(rgbtBlue / count);
 
             // assigning to the reference matrix of pixels
             reference[i][j].rgbtRed = rgbtRed;
