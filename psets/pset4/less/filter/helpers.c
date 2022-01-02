@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-RGBTRIPLE avg (int, int, int, int, int, int, RGBTRIPLE image[][]);
-
 // Convert image to grayscale
 void grayscale(int height, int width, RGBTRIPLE image[height][width])
 {
@@ -130,18 +128,24 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     image[2][2].rgbtGreen = 250;
     image[2][2].rgbtBlue = 255;
     */
-    // avg (1,2,1);
+
+    // loop for rows
     for (int i = 0; i < height; i++)
     {
-        RGBTRIPLE average;
-        average.rgbtRed = 0;
-        average.rgbtGreen = 0;
-        average.rgbtBlue = 0;
+        int count = 0;
+        // loop for columns
         for (int j = 0; j < width; j++)
         {
-            int count = 0;
+            // floats because we don't want to lose the points
+            // setting value to zeros
+            float rgbtRed = 0;
+            float rgbtGreen = 0;
+            float rgbtBlue = 0;
+
+            // checking if in first row
             if (i == 0)
             {
+                // first row first column
                 if (j == 0)
                 {
                     count = 0;
@@ -149,13 +153,17 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     {
                         for (int l = 0; l < 2; l++)
                         {
-                            average.rgbtRed += image[k][l].rgbtRed;
-                            average.rgbtGreen += image[k][l].rgbtGreen;
-                            average.rgbtBlue += image[k][l].rgbtBlue;
+                            int red = image[k][l].rgbtRed;
+                            int green = image[k][l].rgbtGreen;
+                            int blue = image[k][l].rgbtBlue;
+                            rgbtRed += image[k][l].rgbtRed;
+                            rgbtGreen += image[k][l].rgbtGreen;
+                            rgbtBlue += image[k][l].rgbtBlue;
                             count++;
                         }
                     }
                 }
+                //first row last column
                 else if (j == width - 1)
                 {
                     count = 0;
@@ -163,13 +171,14 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     {
                         for (int l = j - 1; l < j + 1; l++)
                         {
-                            average.rgbtRed += image[k][l].rgbtRed;
-                            average.rgbtGreen += image[k][l].rgbtGreen;
-                            average.rgbtBlue += image[k][l].rgbtBlue;
+                            rgbtRed += image[k][l].rgbtRed;
+                            rgbtGreen += image[k][l].rgbtGreen;
+                            rgbtBlue += image[k][l].rgbtBlue;
                             count++;
                         }
                     }
                 }
+                // first row elements except first and last
                 else
                 {
                     count = 0;
@@ -177,16 +186,18 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     {
                         for (int l = j - 1; l < j + 2; l++)
                         {
-                            average.rgbtRed += image[k][l].rgbtRed;
-                            average.rgbtGreen += image[k][l].rgbtGreen;
-                            average.rgbtBlue += image[k][l].rgbtBlue;
+                            rgbtRed += image[k][l].rgbtRed;
+                            rgbtGreen += image[k][l].rgbtGreen;
+                            rgbtBlue += image[k][l].rgbtBlue;
                             count++;
                         }
                     }
                 }
             }
+            // checking if last row
             else if (i == height - 1)
             {
+                // last row first element
                 if (j == 0)
                 {
                     count = 0;
@@ -194,13 +205,14 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     {
                         for (int l = 0; l < 2; l++)
                         {
-                            average.rgbtRed += image[k][l].rgbtRed;
-                            average.rgbtGreen += image[k][l].rgbtGreen;
-                            average.rgbtBlue += image[k][l].rgbtBlue;
+                            rgbtRed += image[k][l].rgbtRed;
+                            rgbtGreen += image[k][l].rgbtGreen;
+                            rgbtBlue += image[k][l].rgbtBlue;
                             count++;
                         }
                     }
                 }
+                // last row last element
                 else if (j == width - 1)
                 {
                     count = 0;
@@ -208,13 +220,14 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     {
                         for (int l = j - 1; l < j + 1; l++)
                         {
-                            average.rgbtRed += image[k][l].rgbtRed;
-                            average.rgbtGreen += image[k][l].rgbtGreen;
-                            average.rgbtBlue += image[k][l].rgbtBlue;
+                            rgbtRed += image[k][l].rgbtRed;
+                            rgbtGreen += image[k][l].rgbtGreen;
+                            rgbtBlue += image[k][l].rgbtBlue;
                             count++;
                         }
                     }
                 }
+                // last row elements except first and last
                 else
                 {
                     count = 0;
@@ -222,36 +235,77 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     {
                         for (int l = j - 1; l < j + 2; l++)
                         {
-                            average.rgbtRed += image[k][l].rgbtRed;
-                            average.rgbtGreen += image[k][l].rgbtGreen;
-                            average.rgbtBlue += image[k][l].rgbtBlue;
+                            rgbtRed += image[k][l].rgbtRed;
+                            rgbtGreen += image[k][l].rgbtGreen;
+                            rgbtBlue += image[k][l].rgbtBlue;
                             count++;
                         }
                     }
                 }
             }
+            // rows except first and last
             else
             {
-                count = 0;
-                for (int k = i - 1; k < i + 2; k++)
+                // rows excepts first and last, first element
+                if (j == 0)
                 {
-                    for (int l = j - 1; l < j + 2; l++)
+                    count = 0;
+                    for (int k = i - 1; k < i + 2; k++)
                     {
-                        average.rgbtRed += image[k][l].rgbtRed;
-                        average.rgbtGreen += image[k][l].rgbtGreen;
-                        average.rgbtBlue += image[k][l].rgbtBlue;
-                        count++;
+                        for (int l = 0; l < 2; l++)
+                        {
+                            rgbtRed += image[k][l].rgbtRed;
+                            rgbtGreen += image[k][l].rgbtGreen;
+                            rgbtBlue += image[k][l].rgbtBlue;
+                            count++;
+                        }
+                    }
+                }
+                // rows excepts first and last, last element
+                else if (j == width - 1)
+                {
+                    count = 0;
+                    for (int k = i - 1; k < i + 2; k++)
+                    {
+                        for (int l = j - 1; l < j + 1; l++)
+                        {
+                            rgbtRed += image[k][l].rgbtRed;
+                            rgbtGreen += image[k][l].rgbtGreen;
+                            rgbtBlue += image[k][l].rgbtBlue;
+                            count++;
+                        }
+                    }
+                }
+                // rows excepts first and last, elements except first and last
+                else
+                {
+                    count = 0;
+                    for (int k = i - 1; k < i + 2; k++)
+                    {
+                        for (int l = j - 1; l < j + 2; l++)
+                        {
+                            rgbtRed += image[k][l].rgbtRed;
+                            rgbtGreen += image[k][l].rgbtGreen;
+                            rgbtBlue += image[k][l].rgbtBlue;
+                            count++;
+                        }
                     }
                 }
             }
-            average.rgbtRed = round (average.rgbtRed / count);
-            average.rgbtGreen = round (average.rgbtGreen / count);
-            average.rgbtBlue = round (average.rgbtBlue / count);
 
-            reference[i][j] = average;
+            // rounding off
+            rgbtRed = round (rgbtRed / count);
+            rgbtGreen = round (rgbtGreen / count);
+            rgbtBlue = round (rgbtBlue / count);
+
+            // assigning to the reference matrix of pixels
+            reference[i][j].rgbtRed = rgbtRed;
+            reference[i][j].rgbtGreen = rgbtGreen;
+            reference[i][j].rgbtBlue = rgbtBlue;
         }
     }
 
+    // coping data from reference to image
     for (int i = 0; i < height; i++)
     {
         for (int j = 0; j < width; j++)
@@ -262,28 +316,3 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 
     return;
 }
-
-// RGBTRIPLE avg(int start_i, int start_j, int end_i, int end_j, int height, int width, RGBTRIPLE image[height][width])
-// {
-//     RGBTRIPLE average;
-//     average.rgbtRed = 0;
-//     average.rgbtGreen = 0;
-//     average.rgbtBlue = 0;
-
-//     int n = 0;
-//     for (int i = start_i; i < end_i; i++)
-//     {
-//         for (int j = start_j; j < end_j; j++)
-//         {
-//             average.rgbtRed += image[i][j].rgbtRed;
-//             average.rgbtGreen += image[i][j].rgbtGreen;
-//             average.rgbtBlue += image[i][j].rgbtBlue;
-//             n++;
-//         }
-//     }
-//     average.rgbtRed = round(average.rgbtRed / n);
-//     average.rgbtGreen = round(average.rgbtGreen / n);
-//     average.rgbtBlue = round(average.rgbtBlue / n);
-
-//     return average;
-// }
