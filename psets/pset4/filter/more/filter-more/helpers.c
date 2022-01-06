@@ -490,5 +490,8 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
             image[i][j] = reference[i][j];
         }
     }
+
+    free (reference);
+
     return;
 }
